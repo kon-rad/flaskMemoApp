@@ -1,0 +1,3 @@
+graft flaskFinanceApp/templates
+graft flaskFinanceApp/static
+include flaskFinanceApp/schema.sql
