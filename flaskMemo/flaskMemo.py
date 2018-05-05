@@ -10,7 +10,7 @@
 
 from datetime import datetime
 import os
-from flask import Flask
+from flask import Flask, render_template, url_for, flash, redirect
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -44,6 +44,27 @@ class Memo(db.Model):
 
     # def __repr__(self):
     #     return f"Memo('{self.title}', '{self.content}')"
+
+
+memos = [
+    {
+        'author': 'John Smith',
+        'title': 'Memo 1',
+        'content': 'First memo content',
+        'date_posted': 'April 29, 2018'
+    },
+    {
+        'author': 'Jane Doe',
+        'title': 'Memo 2',
+        'content': 'Second memo content',
+        'date_posted': 'April 29, 2018'
+    }
+]
+
+@app.route("/")
+@app.route("/home")
+def home():
+    return render_template('home.html', memos=memos)
 
 
 # def connect_db():

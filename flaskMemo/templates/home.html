@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block content %}
+    {% for memo in memos %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ memo.author }}</a>
+              <small class="text-muted">{{ memo.date_memoed }}</small>
+            </div>
+            <h2><a class="article-title" href="#">{{ memo.title }}</a></h2>
+            <p class="article-content">{{ memo.content }}</p>
+          </div>
+        </article>
+    {% endfor %}
+{% endblock content %}
