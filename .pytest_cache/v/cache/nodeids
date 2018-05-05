@@ -1,0 +1,3 @@
+[
+  "tests/test_flaskMemo.py::FlaskMemoTestCase::test_empty_db"
+]
