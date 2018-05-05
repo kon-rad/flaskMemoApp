@@ -10,7 +10,8 @@
 
 from datetime import datetime
 import os
-from flask import Flask, render_template, url_for, flash, redirect
+from flask_cors import CORS, cross_origin
+from flask import Flask, render_template, url_for, flash, redirect, jsonify
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -18,18 +19,14 @@ from flask_migrate import Migrate
 # basedir = os.path.abspath(os.path.dirname(__file__))
 
 app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 app.config.from_object(Config)
 
 
 db = SQLAlchemy(app)
 
-def init_db():
-    """Initializes the database."""
-    app = Flask(__name__)
-    db.init_app(app)
-    db.create_all()
-    return app
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -68,43 +65,27 @@ memos = [
     }
 ]
 
+def init_db():
+    """Initializes the database."""
+    app = Flask(__name__)
+    db.init_app(app)
+    db.create_all()
+    return app
+
 @app.route("/")
 @app.route("/home")
 def home():
     return render_template('home.html', memos=memos)
-    
+
+
+
+@app.route("/memo", methods=['GET', 'POST'])
+@cross_origin(origin='*')
+def memo():
+    return jsonify('hello from server')
+
+
+
 @app.route("/empty")
 def empty():
     return ('No entries here so far')
-
-# def connect_db():
-#     """Connects to the specific database."""
-#     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/flaskMemo'
-#     db = SQLAlchemy(app)
-#     return db
-
-
-
-
-# @app.cli.command('initdb')
-# def initdb_command():
-#     """Creates the database tables."""
-#     init_db()
-#     print('Initialized the database.')
-
-
-def get_db():
-    """Opens a new database connection if there is none yet for the
-    current application context.
-    """
-    if not hasattr(g, 'sqlite_db'):
-        g.sqlite_db = connect_db()
-    return g.sqlite_db
-
-
-# @app.teardown_appcontext
-# def close_db(error):
-#     """Closes the database again at the end of the request."""
-#     if hasattr(g, 'sqlite_db'):
-#         g.sqlite_db.close()
-
