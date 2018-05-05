@@ -1,0 +1,1 @@
+from .flaskMemo import app

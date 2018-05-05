@@ -1,2 +1,2 @@
-# flaskFinanceApp
-flaskFinanceApp - This is a full stack application for tracking expenses built with flask and sqlAlchemy.
+# flaskMemo
+flaskMemo - This is a full stack application for making memos built with flask and sqlAlchemy.
