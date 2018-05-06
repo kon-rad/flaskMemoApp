@@ -26,6 +26,10 @@ $ virtualenv venv
 2. install the application ( or try this before step 1 )
 pip install --editable .
 
+also checkthis out
+pip freeze
+pip freeze > requirements.txt
+
 The above installation command assumes that it is run within the projects root directory, flaskr/. The editable flag allows editing source code without having to reinstall the Flask app each time you make changes. The flaskr app is now installed in your virtualenv (see output of pip freeze).
 
 3. create db manual

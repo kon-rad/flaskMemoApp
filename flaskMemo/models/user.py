@@ -21,14 +21,24 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(128))
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
 
-    def __init__(self, **kwargs):
-        super(User, self).__init__(**kwargs)
-        if self.role is None:
-            if self.email == current_app.config['ADMIN_EMAIL']:
-                self.role = Role.query.filter_by(
-                    permissions=Permission.ADMINISTER).first()
-            if self.role is None:
-                self.role = Role.query.filter_by(default=True).first()
+    def __init__(self, name):
+        """initialize with name."""
+        self.name = name
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+    @staticmethod
+    def get_all():
+        return Bucketlist.query.all()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    def __repr__(self):
+        return "<Bucketlist: {}>".format(self.name)
 
 
     @staticmethod
