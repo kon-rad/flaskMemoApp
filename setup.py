@@ -9,6 +9,7 @@ setup(
         'flask',
         'flask-sqlalchemy',
         'flask_migrate',
+        'flask_cors',
     ],
     setup_requires=[
         'pytest-runner',
