@@ -33,6 +33,10 @@ pip freeze > requirements.txt
 The above installation command assumes that it is run within the projects root directory, flaskr/. The editable flag allows editing source code without having to reinstall the Flask app each time you make changes. The flaskr app is now installed in your virtualenv (see output of pip freeze).
 
 3. create db manual
+(venv) $ createdb test_db
+(venv) $ createdb flask_api
+
+
 python flaskMemo
 from flaskMemo import db
 db.create_all()
@@ -65,9 +69,21 @@ db.drop.all()
 db.create_all()
 
 4. Run app
+
+
 export FLASK_APP=flaskMemo
+APP_SETTINGS="development"
 export FLASK_DEBUG=true
 flask run
+
+another way -> 
+$ export FLASK_APP="run.py"
+$ export APP_SETTINGS="development"
+$ export SECRET="a-long-string-of-random-characters-CHANGE-TO-YOUR-LIKING"
+$ export DATABASE_URL="postgresql://localhost/flask_api"
+
+also can use python run.py
+
 
 5. Test app
 python setup.py test

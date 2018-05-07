@@ -8,13 +8,18 @@
 
 """
 
+from flask_api import FlaskAPI
+from flask_sqlalchemy import SQLAlchemy
+from config import Config
+
+#model
 from datetime import datetime
 import os
+from flask_migrate import Migrate
+
+#route
 from flask_cors import CORS, cross_origin
 from flask import Flask, render_template, url_for, flash, redirect, jsonify
-from config import Config
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
 
 # basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -26,6 +31,15 @@ app.config.from_object(Config)
 
 
 db = SQLAlchemy(app)
+
+def create_app(Config):
+    app = FlaskAPI(__name__, instance_relative_config=True)
+    cors = CORS(app)
+    app.config.from_object(config[config_name])
+    app.config.from_pyfile('config.py')
+    db.init_app(app)
+
+    return app
 
 
 class User(db.Model):
