@@ -1,15 +1,19 @@
-
 from flask_cors import cross_origin
 from flask import render_template, redirect, jsonify, request
-from flaskblog.models import User, Memo
+from models import User, Memo
+from flaskMemo import app
 
-def init_db():
-    """Initializes the database."""
-    app = Flask(__name__)
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    db.init_app(app)
-    db.create_all()
-    return app
+
+memos = [
+    {
+        'title': 'App idea 1',
+        'content': 'Instagram for cats'
+    },
+    {
+        'title': 'App idea 2',
+        'content': 'Tree identification AI app'
+    }
+]
 
 @app.route("/")
 @app.route("/home")

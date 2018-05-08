@@ -102,3 +102,11 @@ virtual/
 .mypy_cache/
 
 #notes.md
+scratch.py
+.vscode
+.pytest_cache/*
+.pytest_cache
+.DS_Store
+*/.DS_Store
+
+.idea
