@@ -12,9 +12,6 @@ class FlaskMemoTestCase(unittest.TestCase):
 
         self.memo = {'title': 'App idea', 'content': 'Make a memo app'}
 
-        """binds the app to the current context"""
-        with flaskMemo.app.app_context():
-            flaskMemo.flaskMemo.init_db()
 
     def tearDown(self):
         os.close(self.db_fd)
