@@ -1,1 +1,9 @@
-{}
+{
+  "tests/test_flaskMemo.py": true, 
+  "tests/test_flaskMemo.py::FlaskMemoTestCase::test_api_can_get_all_memos": true, 
+  "tests/test_flaskMemo.py::FlaskMemoTestCase::test_api_can_get_memo_by_id": true, 
+  "tests/test_flaskMemo.py::FlaskMemoTestCase::test_memo_can_be_edited": true, 
+  "tests/test_flaskMemo.py::FlaskMemoTestCase::test_memo_creation": true, 
+  "tests/test_flaskMemo.py::FlaskMemoTestCase::test_memo_deletion": true, 
+  "tests/test_memos.py": true
+}

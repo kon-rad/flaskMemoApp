@@ -70,9 +70,9 @@ db.create_all()
 
 4. Run app
 
+APP_SETTINGS="development"
 
 export FLASK_APP=flaskMemo
-APP_SETTINGS="development"
 export FLASK_DEBUG=true
 flask run
 
