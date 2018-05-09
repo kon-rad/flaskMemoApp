@@ -26,7 +26,7 @@ $ virtualenv venv
 2. install the application ( or try this before step 1 )
 pip install --editable .
 
-also checkthis out
+also update your requirements (pip freeze > requirements.txt) 
 pip freeze
 pip freeze > requirements.txt
 
@@ -90,7 +90,7 @@ python setup.py test
 
 https://github.com/mitsuhiko/flask-sqlalchemy/issues/98
 
-export FLASK_APP=flaskFinanceApp
+export FLASK_APP=flaskMemo
 export FLASK_DEBUG=true
 flask run
 

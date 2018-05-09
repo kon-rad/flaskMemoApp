@@ -1,21 +1,37 @@
 import os
-import flaskMemo
+from flaskMemo import app, db
 import unittest
 import tempfile
+
+TEST_DB = 'test.db'
+
+class BasicTestCase(unittest.TestCase):
+
+    def test_index(self):
+        """initial test. ensure flask was set up correctly"""
+        tester = app.test_client(self)
+        response = tester.get('/', content_type='html/text')
+        self.assertEqual(response.status_code, 200)
+
+    def test_database(self):
+        """initial test. ensure that the database exists"""
+        tester = os.path.exists("flaskr.db")
+        self.assertTrue(tester)
 
 class FlaskMemoTestCase(unittest.TestCase):
 
     def setUp(self):
-        self.db_fd, flaskMemo.app.config['DATABASE'] = tempfile.mkstemp()
-        flaskMemo.app.testing = True
-        self.app = flaskMemo.app.test_client()
-
-        self.memo = {'title': 'App idea', 'content': 'Make a memo app'}
+        """Set up a blank temp database before each test"""
+        basedir = os.path.abspath(os.path.dirname(__file__))
+        app.config['TESTING'] = True
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + \
+            os.path.join(basedir, TEST_DB)
+        self.app = app.test_client()
+        db.create_all()
 
 
     def tearDown(self):
-        os.close(self.db_fd)
-        os.unlink(flaskMemo.app.config['DATABASE'])
+        db.drop_all()
 
     def test_empty_db(self):
         rv = self.app.get('/empty')
@@ -25,7 +41,7 @@ class FlaskMemoTestCase(unittest.TestCase):
         self.assertFalse(flaskMemo.app is None)
 
     def test_app_is_testing(self):
-        self.assertTrue(flaskMemo.app.config['TESTING'])
+        self.assertTrue(app.config['TESTING'])
 
     def test_memo_creation(self):
         """Test API can create a memo (POST request)"""
