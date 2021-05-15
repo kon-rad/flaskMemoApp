@@ -1,8 +1,9 @@
-
 #model
 from datetime import datetime
 import os
-from flaskMemo import db
+
+
+from . import db
 
 
 class Memo(db.Model):
@@ -58,57 +59,57 @@ class Memo(db.Model):
 
 
 class User(db.Model):
-    """This class represents the User table."""
+   """This class represents the User table."""
 
-    __tablename__ = 'User'
+   __tablename__ = 'User'
 
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(20), unique=True, nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
-    password = db.Column(db.String(60), nullable=False)
-    memos = db.relationship('Memo', backref='author', lazy=True)
+   id = db.Column(db.Integer, primary_key=True)
+   username = db.Column(db.String(20), unique=True, nullable=False)
+   email = db.Column(db.String(120), unique=True, nullable=False)
+   image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
+   password = db.Column(db.String(60), nullable=False)
+   memos = db.relationship('Memo', backref='author', lazy=True)
 
-    def __init__(self, username):
-        """initialize with username."""
-        self.username = username
+   def __init__(self, username):
+       """initialize with username."""
+       self.username = username
 
-    def save(self):
-        db.session.add(self)
-        db.session.commit()
+   def save(self):
+       db.session.add(self)
+       db.session.commit()
 
-    @staticmethod
-    def get_all():
-        return User.query.all()
+   @staticmethod
+   def get_all():
+       return User.query.all()
 
-    def delete(self):
-        db.session.delete(self)
-        db.session.commit()
+   def delete(self):
+       db.session.delete(self)
+       db.session.commit()
 
-    def __repr__(self):
-        return "<User: {}>".format(self.name)
+   def __repr__(self):
+       return "<User: {}>".format(self.name)
 
-    @staticmethod
-    def generate_fake(count=100, **kwargs):
-        """Generate a number of fake users for testing."""
-        from sqlalchemy.exc import IntegrityError
-        from random import seed, choice
-        from faker import Faker
+   @staticmethod
+   def generate_fake(count=100, **kwargs):
+       """Generate a number of fake users for testing."""
+       from sqlalchemy.exc import IntegrityError
+       from random import seed, choice
+       from faker import Faker
 
-        fake = Faker()
+       fake = Faker()
 
-        seed()
-        for i in range(count):
-            u = User(
-                username=fake.first_name(),
-                email=fake.email(),
-                password='password',
-                **kwargs)
-            db.session.add(u)
-            try:
-                db.session.commit()
-            except IntegrityError:
-                db.session.rollback()
+       seed()
+       for i in range(count):
+           u = User(
+               username=fake.first_name(),
+               email=fake.email(),
+               password='password',
+               **kwargs)
+           db.session.add(u)
+           try:
+               db.session.commit()
+           except IntegrityError:
+               db.session.rollback()
 
-    def __repr__(self):
-        return '<User \'%s\'>' % self.full_name()
+   def __repr__(self):
+       return '<User \'%s\'>' % self.full_name()

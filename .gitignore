@@ -101,7 +101,7 @@ virtual/
 # mypy
 .mypy_cache/
 
-#notes.md
+notes.md
 scratch.py
 .vscode
 .pytest_cache/*
